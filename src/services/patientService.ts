@@ -1,6 +1,7 @@
 import patientData from '../../data/patients.json';
+import { v1 as uuid } from 'uuid';
 
-import { Patient } from '../types';
+import { Patient, newPatientEntry } from '../types';
 
 const patients: Array<Patient> = patientData;
 
@@ -18,4 +19,14 @@ const getEntriesExceptSsn = (): Omit<Patient, 'ssn'>[] => {
   }));
 };
 
-export default { getEntries, getEntriesExceptSsn };
+const addPatient = (entry: newPatientEntry): Patient => {
+  const id = uuid();
+  const newPatientEntry = {
+    id,
+    ...entry,
+  };
+  patients.push(newPatientEntry);
+  return newPatientEntry;
+};
+
+export default { getEntries, getEntriesExceptSsn, addPatient };
