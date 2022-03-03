@@ -1,9 +1,14 @@
 import patientData from '../../data/patients.json';
 import { v1 as uuid } from 'uuid';
 
-import { Patient, newPatientEntry } from '../types';
+import { toNewPatientEntry } from '../utils';
+import { Patient, NewPatientEntry } from '../types';
 
-const patients: Array<Patient> = patientData;
+const patients: Patient[] = patientData.map((obj) => {
+  const object = toNewPatientEntry(obj) as Patient;
+  object.id = obj.id;
+  return object;
+});
 
 const getEntries = (): Array<Patient> => {
   return patients;
@@ -19,7 +24,7 @@ const getEntriesExceptSsn = (): Omit<Patient, 'ssn'>[] => {
   }));
 };
 
-const addPatient = (entry: newPatientEntry): Patient => {
+const addPatient = (entry: NewPatientEntry): Patient => {
   const id = uuid();
   const newPatientEntry = {
     id,
