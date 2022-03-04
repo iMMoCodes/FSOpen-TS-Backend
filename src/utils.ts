@@ -64,7 +64,6 @@ type Fields = {
   occupation: unknown;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const toNewPatientEntry = ({
   name,
   dateOfBirth,
@@ -78,6 +77,7 @@ export const toNewPatientEntry = ({
     ssn: parseSsn(ssn),
     gender: parseGender(gender),
     occupation: parseOccupation(occupation),
+    entries: [],
   };
   return newEntry;
 };

@@ -14,14 +14,22 @@ const getEntries = (): Array<Patient> => {
   return patients;
 };
 
+const findById = (id: string): Patient | undefined => {
+  const entry = patients.find((patient) => patient.id === id);
+  return entry;
+};
+
 const getEntriesExceptSsn = (): Omit<Patient, 'ssn'>[] => {
-  return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
-    id,
-    name,
-    dateOfBirth,
-    gender,
-    occupation,
-  }));
+  return patients.map(
+    ({ id, name, dateOfBirth, gender, occupation, entries }) => ({
+      id,
+      name,
+      dateOfBirth,
+      gender,
+      occupation,
+      entries,
+    })
+  );
 };
 
 const addPatient = (entry: NewPatientEntry): Patient => {
@@ -34,4 +42,4 @@ const addPatient = (entry: NewPatientEntry): Patient => {
   return newPatientEntry;
 };
 
-export default { getEntries, getEntriesExceptSsn, addPatient };
+export default { getEntries, findById, getEntriesExceptSsn, addPatient };
