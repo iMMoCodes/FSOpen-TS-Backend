@@ -49,11 +49,53 @@ const parseHealthCheckRating = (HCRating: unknown): HealthCheckRating => {
   return HCRating;
 };
 
-const parseString = (x: unknown): string => {
-  if (!x || !isString(x)) {
-    throw new Error('Incorrect or missing string value: ' + x);
+const parseId = (id: unknown): string => {
+  if (!id || !isString(id)) {
+    throw new Error('Incorrect or missing id value: ' + id);
   }
-  return x;
+  return id;
+};
+const parseName = (name: unknown): string => {
+  if (!name || !isString(name)) {
+    throw new Error('Incorrect or missing name value: ' + name);
+  }
+  return name;
+};
+const parseSSn = (ssn: unknown): string => {
+  if (!ssn || !isString(ssn)) {
+    throw new Error('Incorrect or missing ssn value: ' + ssn);
+  }
+  return ssn;
+};
+const parseOccupation = (occupation: unknown): string => {
+  if (!occupation || !isString(occupation)) {
+    throw new Error('Incorrect or missing occupation value: ' + occupation);
+  }
+  return occupation;
+};
+const parseDescription = (description: unknown): string => {
+  if (!description || !isString(description)) {
+    throw new Error('Incorrect or missing description value: ' + description);
+  }
+  return description;
+};
+const parseSpecialist = (specialist: unknown): string => {
+  if (!specialist || !isString(specialist)) {
+    throw new Error('Incorrect or missing specialist value: ' + specialist);
+  }
+  return specialist;
+};
+const parseCriteria = (criteria: unknown): string => {
+  if (!criteria || !isString(criteria)) {
+    throw new Error('Incorrect or missing criteria value: ' + criteria);
+  }
+  return criteria;
+};
+const parseEmployerName = (employerName: unknown): string => {
+  if (!employerName || !isString(employerName)) {
+    throw new Error('Incorrect or missing employerName value: ' + employerName);
+  }
+  return employerName;
 };
 
 type Fields = {
@@ -74,11 +116,11 @@ export const toNewPatientEntry = ({
   entries,
 }: Fields): NewPatientEntry => {
   const newEntry: NewPatientEntry = {
-    name: parseString(name),
+    name: parseName(name),
     dateOfBirth: parseDate(dateOfBirth),
-    ssn: parseString(ssn),
+    ssn: parseSSn(ssn),
     gender: parseGender(gender),
-    occupation: parseString(occupation),
+    occupation: parseOccupation(occupation),
     entries: entries,
   };
   return newEntry;
@@ -110,34 +152,34 @@ export const toNewEntry = ({
 }: EntryFields): Entry | undefined => {
   if (type === 'HealthCheck') {
     const newEntry: HealthCheckEntry = {
-      id: parseString(id),
-      description: parseString(description),
+      id: parseId(id),
+      description: parseDescription(description),
       date: parseDate(date),
-      specialist: parseString(specialist),
+      specialist: parseSpecialist(specialist),
       healthCheckRating: parseHealthCheckRating(healthCheckRating),
       type,
     };
     return newEntry;
   } else if (type === 'Hospital') {
     const newEntry: HospitalEntry = {
-      id: parseString(id),
-      description: parseString(description),
+      id: parseId(id),
+      description: parseDescription(description),
       date: parseDate(date),
-      specialist: parseString(specialist),
+      specialist: parseSpecialist(specialist),
       discharge: {
         date: parseDate(discharge.date),
-        criteria: parseString(discharge.criteria),
+        criteria: parseCriteria(discharge.criteria),
       },
       type,
     };
     return newEntry;
   } else if (type === 'OccupationalHealthcare') {
     const newEntry: OccupationalHealthcareEntry = {
-      id: parseString(id),
-      description: parseString(description),
+      id: parseId(id),
+      description: parseDescription(description),
       date: parseDate(date),
-      specialist: parseString(specialist),
-      employerName: parseString(employerName),
+      specialist: parseSpecialist(specialist),
+      employerName: parseEmployerName(employerName),
       type,
     };
     return newEntry;
