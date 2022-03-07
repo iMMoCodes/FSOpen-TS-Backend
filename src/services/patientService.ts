@@ -2,7 +2,7 @@ import patientData from '../../data/patientsUpdated';
 import { v1 as uuid } from 'uuid';
 
 import { toNewPatientEntry } from '../utils';
-import { Patient, NewPatientEntry } from '../types';
+import { Patient, NewPatientEntry, Entry } from '../types';
 
 const patients: Patient[] = patientData.map((obj) => {
   const object = toNewPatientEntry(obj) as Patient;
@@ -42,4 +42,24 @@ const addPatient = (entry: NewPatientEntry): Patient => {
   return newPatientEntry;
 };
 
-export default { getEntries, findById, getEntriesExceptSsn, addPatient };
+const addPatientEntry = (
+  entry: Entry | undefined,
+  pat: Patient | undefined
+): Entry | undefined => {
+  if (pat && entry) {
+    const newEntryEntry = {
+      ...entry,
+    };
+    pat.entries.push(newEntryEntry);
+    return newEntryEntry;
+  }
+  return undefined;
+};
+
+export default {
+  getEntries,
+  findById,
+  getEntriesExceptSsn,
+  addPatient,
+  addPatientEntry,
+};
